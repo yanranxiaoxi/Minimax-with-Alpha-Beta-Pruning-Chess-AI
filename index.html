@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+	<head>
+		<title>α-β 剪枝优化 Minimax 算法国际象棋 AI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="α-β 剪枝优化 Minimax 算法国际象棋 AI 在线对弈程序，使用 JavaScript 在浏览器内完成计算" />
+		<link rel="stylesheet" href="./assets/css/mdui.min.css?v=1.0.2" />
+		<link rel="stylesheet" href="./assets/css/main.css?v=20220317" />
+		<link rel="stylesheet" href="./assets/css/chessboard.min.css?v=1.0.0" />
+		<script type="text/javascript" src="./assets/js/chessboard.min.js?v=1.0.0" defer="defer"></script>
+		<script type="text/javascript" src="./assets/js/jquery.min.js?v=3.5.1"></script>
+		<script type="text/javascript" src="./assets/js/mdui.min.js?v=1.0.2" defer="defer"></script>
+		<script type="text/javascript" src="./assets/js/chess.js?v=20220416" defer="defer"></script>
+		<script type="text/javascript" src="./assets/js/main.js?v=20220417" defer="defer"></script>
+	</head>
+	<body class="mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-light">
+		<main>
+			<div class="mdui-container mdui-m-y-3">
+				<div class="mdui-row mdui-center">
+					<div class="mdui-col-md-6">
+						<div class="mdui-typo">
+							<div class="mdui-typo-display-2 mdui-text-center">国际象棋 AI 对弈</div>
+							<div class="mdui-row mdui-typo-subheading mdui-text-center">
+								在&nbsp;<span id="time">0</span>&nbsp;秒内计算了&nbsp;<span id="position-count">0</span>&nbsp;个坐标
+							</div>
+							<div class="mdui-row mdui-m-b-3 mdui-typo-subheading mdui-text-center">
+								相当于每秒计算了&nbsp;<span id="positions-per-s">0</span>&nbsp;个坐标
+							</div>
+						</div>
+
+						<div id="accordion" mdui-collapse="{accordion: true}">
+
+							<div class="mdui-collapse-item">
+								<div class="mdui-collapse-item-header mdui-card mdui-hoverable">
+									<div class="mdui-card-primary mdui-ripple" id="settingsHeading">
+										<div class="mdui-typo-headline mdui-text-center">
+											设置 / Settings
+										</div>
+									</div>
+								</div>
+								<div id="settings" class="mdui-collapse-item-body">
+									<div class="mdui-row mdui-center mdui-m-y-3 mdui-text-center">
+										<label for="search-depth" class="mdui-typo-subheading">计算深度 (黑方)：</label>
+										<select class="mdui-select" id="search-depth">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3" selected>3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+										</select>
+									</div>
+									<div class="mdui-row mdui-center mdui-m-y-1 mdui-text-center">
+										<label for="search-depth-white" class="mdui-typo-subheading">计算深度 (白方)：</label>
+										<select class="mdui-select" id="search-depth-white">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3" selected>3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+										</select>
+									</div>
+									<div class="mdui-row mdui-center mdui-m-y-3 mdui-text-center">
+										<label for="showHint" class="mdui-checkbox mdui-typo-subheading">
+											<input type="checkbox" id="showHint" name="showHint" value="showHint">
+											<i class="mdui-checkbox-icon"></i>
+											显示 AI 计算的移动建议 (白方)
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="mdui-collapse-item">
+								<div class="mdui-collapse-item-header mdui-card mdui-hoverable">
+									<div class="mdui-card-primary mdui-ripple" id="openingPositionsHeading">
+										<div class="mdui-typo-headline mdui-text-center">
+											开局 / Opening Positions
+										</div>
+									</div>
+								</div>
+								<div id="openingPositions" class="mdui-collapse-item-body">
+									<div class="mdui-row mdui-m-y-3 mdui-text-center">
+										<div class="mdui-col-md-6 mdui-m-y-1">
+											<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="ruyLopezBtn">西班牙开局 / Ruy Lopez</button>
+										</div>
+										<div class="mdui-col-md-6 mdui-m-y-1">
+											<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="italianGameBtn">意大利开局 / Italian Game</button>
+										</div>
+									</div>
+									<div class="mdui-row mdui-m-y-3 mdui-text-center">
+										<div class="mdui-col-md-6 mdui-m-y-1">
+											<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="sicilianDefenseBtn">西西里防御 / Sicilian Defense</button>
+										</div>
+										<div class="mdui-col-md-6 mdui-m-y-1">
+											<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="startBtn">初始位置 / Start Position</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="mdui-collapse-item">
+								<div class="mdui-collapse-item-header mdui-card mdui-hoverable">
+									<div class="mdui-card-primary mdui-ripple" id="compVsCompHeading">
+										<div class="mdui-typo-headline mdui-text-center">
+											机器对局 / Computer vs. Computer
+										</div>
+									</div>
+								</div>
+								<div id="compVsComp" class="mdui-collapse-item-body">
+									<div class="mdui-row mdui-m-t-3 mdui-text-center">
+										<div class="mdui-col-md-6 mdui-m-y-1">
+											<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="compVsCompBtn">开始对局</button>
+										</div>
+										<div class="mdui-col-md-6 mdui-m-y-1">
+											<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme" id="resetBtn">停止并重置</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="mdui-row mdui-m-y-3 mdui-typo mdui-text-center">
+							<div class="mdui-col-md-12">
+								<div class="mdui-typo-display-1">优势</div>
+								<div class="mdui-typo-subheading">当前<span id="advantageColor">双方均没有</span>占据优势 (+<span id="advantageNumber">0</span>)</div>
+								<br />
+								<div class="mdui-progress">
+									<div class="mdui-progress-determinate" style="width: 50%;" id='advantageBar'></div>
+								</div>
+							</div>
+						</div>
+						<div class="mdui-row mdui-m-y-3 mdui-typo mdui-text-center">
+							<div class="mdui-col-md-12">
+								<div class="mdui-typo-display-1">状态</div>
+								<div class="mdui-typo-subheading"><span id="status">当前无「将军」、「将死」、「和棋」状态</span></div>
+							</div>
+						</div>
+					</div>
+					<div class="mdui-col-md-6">
+						<div id="myBoard"></div>
+						<div class="mdui-row mdui-m-y-3 mdui-text-center">
+							<div class="mdui-col-md-4 mdui-m-y-2">
+								<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="undoBtn">悔棋</button>
+							</div>
+							<div class="mdui-col-md-4 mdui-m-y-2">
+								<button class="mdui-btn mdui-btn-raised mdui-ripple" id="redoBtn">还原</button>
+							</div>
+							<div class="mdui-col-md-4 mdui-m-y-2">
+								<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme" id="reloadBtn">重置棋盘</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="mdui-fab-wrapper" id="shareFab" mdui-fab="{trigger: 'hover'}">
+				<button class="mdui-fab mdui-ripple mdui-color-theme-accent">
+					<i class="mdui-icon material-icons">share</i>
+					<i class="mdui-icon mdui-fab-opened material-icons">add</i>
+				</button>
+				<div class="mdui-fab-dial">
+					<button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-purple" id="linkShareBtn">
+						<i class="mdui-icon material-icons">link</i>
+					</button>
+					<button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink" id="codeShareBtn">
+						<i class="mdui-icon material-icons">code</i>
+					</button>
+					<button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-teal" id="homeShareBtn">
+						<i class="mdui-icon material-icons">home</i>
+					</button>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<div class="mdui-typo-subheading mdui-text-center">Copyright &copy 2022. Designed and built with all the ❤ in the world by <a href="https://soraharu.com:443/" target="_blank">XiaoXi</a>.</div>
+		</footer>
+	</body>
+</html>

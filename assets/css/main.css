@@ -1,0 +1,21 @@
+#myBoard {
+	max-width: 100%;
+	height: auto;
+	overflow-y: disabled;
+}
+
+.highlight-white {
+	box-shadow: inset 0 0 3px 3px yellow;
+}
+
+.highlight-black {
+	box-shadow: inset 0 0 3px 3px blue;
+}
+
+.highlight-hint {
+	box-shadow: inset 0 0 3px 3px red;
+}
+
+body {
+	overflow-y: scroll;
+}
