@@ -1,3 +1,30 @@
+/*
+ * Copyright (c) 2020, Jeff Hlywa (jhlywa@gmail.com)
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ *----------------------------------------------------------------------------*/
+
 var Chess = function(fen) {
     var BLACK = 'b'
     var WHITE = 'w'
@@ -134,7 +161,9 @@ var Chess = function(fen) {
     var header = {}
     var comments = {}
   
-    /* 如果用户传入一个 fen 字符串，则加载它，否则默认为起始位置 */
+    /* if the user passes in a fen string, load it, else default to
+     * starting position
+     */
     if (typeof fen === 'undefined') {
       load(DEFAULT_POSITION)
     } else {
@@ -235,8 +264,10 @@ var Chess = function(fen) {
       return true
     }
   
-    /* TODO：这个函数非常糟糕，它验证结构，但完全忽略内容（例如，不验证每一方都有一个国王）
-     * ... 我们应该重写这个，并在编写时丢弃愚蠢的 error_number 字段
+    /* TODO: this function is pretty much crap - it validates structure but
+     * completely ignores content (e.g. doesn't verify that each side has a king)
+     * ... we should rewrite this, and ditch the silly error_number field while
+     * we're at it
      */
     function validate_fen(fen) {
       var errors = {
