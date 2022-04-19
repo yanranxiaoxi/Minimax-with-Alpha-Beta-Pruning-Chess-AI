@@ -70,15 +70,15 @@
 
 ![使用 Minimax 算法](./docs/images/6. with Minimax.gif)
 
-> 深度等级为 `2` 的 Minimax 算法，你可以在 [https://codepen.io/yanranxiaoxi/pen/bGazbKY](https://codepen.io/yanranxiaoxi/pen/bGazbKY) 上尝试。
+> 计算深度为 `2` 的 Minimax 算法，你可以在 [https://codepen.io/yanranxiaoxi/pen/bGazbKY](https://codepen.io/yanranxiaoxi/pen/bGazbKY) 上尝试。
 
-Minimax 算法的有效性在很大程度上取决于我们能达到的搜索深度，这是我们将在接下来的步骤中改进的内容。
+Minimax 算法的有效性在很大程度上取决于我们能达到的计算深度，这是我们将在接下来的步骤中改进的内容。
 
 ### 步骤 4：α-β 剪枝优化
 
 [α-β 剪枝](https://zh.wikipedia.org/wiki/Alpha-beta%E5%89%AA%E6%9E%9D) 是 Minimax 算法的优化方法，它允许我们忽略搜索树中的某些分支，这有助于我们在使用相同的资源的同时更深入地评估 Minimax 搜索树。
 
-α-β 剪枝基于这样一种情况：如果我们发现一个移动会导致比以前计算的移动更糟糕的情况，我们可以停止评估搜索树的一部分。
+α-β 剪枝基于这样一种情况：如果我们发现一个移动会导致比以前评估的移动更糟糕的情况，我们可以停止评估搜索树的一部分。
 
 α-β 剪枝并不会影响 Minimax 算法的结果，它只会让它更快。
 
@@ -92,7 +92,7 @@ Minimax 算法的有效性在很大程度上取决于我们能达到的搜索深
 
 ![使用 α-β 剪枝优化的 Minimax 算法拥有更好的性能](./docs/images/8. Minimax with alpha-beta.png)
 
-> 以上为执行深度为 `4` 且初始位置如图的搜索，需要评估的位置数量。
+> 以上为计算深度为 `4` 且初始位置如图的搜索，需要评估的位置数量。
 
 [点击这里](https://codepen.io/yanranxiaoxi/pen/vYpbYOm) 尝试由 α-β 剪枝优化后的国际象棋 AI。
 
@@ -110,7 +110,7 @@ Minimax 算法的有效性在很大程度上取决于我们能达到的搜索深
 
 ![“像样的”国际象棋](./docs/images/10. decent.gif)
 
-> 改进的评估功能与 α-β 剪枝优化，搜索深度为 `3`，你可以在 [https://codepen.io/yanranxiaoxi/pen/YzYBzpQ](https://codepen.io/yanranxiaoxi/pen/YzYBzpQ) 上尝试。
+> 改进的评估功能与 α-β 剪枝优化，计算深度为 `3`，你可以在 [https://codepen.io/yanranxiaoxi/pen/YzYBzpQ](https://codepen.io/yanranxiaoxi/pen/YzYBzpQ) 上尝试。
 
 ### 结论
 
