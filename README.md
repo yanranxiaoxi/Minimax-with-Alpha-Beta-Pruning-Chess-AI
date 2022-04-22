@@ -30,7 +30,7 @@
 
 我们将使用 [chess.js](https://github.com/jhlywa/chess.js) 库生成棋子移动，并使用 [chessboard.js](https://github.com/oakmac/chessboardjs) 来可视化棋盘。移动生成库基本上实现了国际象棋的所有规则，基于此，我们可以计算给定棋盘状态下的所有合法移动。
 
-![所有合法移动](./docs/images/1. all legal moves.png)
+![所有合法移动](./docs/images/1.%20all%20legal%20moves.png)
 
 > 移动生成函数的可视化。起始位置用作输入，输出是从该位置移动的所有可能。
 
@@ -38,7 +38,7 @@
 
 我们首先需要创建一个函数，该函数仅从所有可能的移动中返回随机移动。虽然这时的 AI 并不是一个非常可靠的棋手，但它是一个很好的起点，因为我们已经可以与它对抗：
 
-![随机移动](./docs/images/2. ugly moves.gif)
+![随机移动](./docs/images/2.%20ugly%20moves.gif)
 
 > 黑方随机移动，你可以在 [https://codepen.io/yanranxiaoxi/pen/yLpGdYr](https://codepen.io/yanranxiaoxi/pen/yLpGdYr) 上尝试。
 
@@ -46,11 +46,11 @@
 
 现在让我们试着教会 AI 如何移动可以获得更大的优势，实现这一点的最简单方法是使用下表计算棋盘上棋子的相对优势：
 
-![棋子的相对优势](./docs/images/3. pieces advantage.png)
+![棋子的相对优势](./docs/images/3.%20pieces%20advantage.png)
 
 使用评估函数，我们能够创建一个算法，该算法选择获得最多优势的移动。现在，我们的 AI 会优先选择能够吃掉对方棋子的移动：
 
-![选择最佳的移动](./docs/images/4. choose highest evaluation.gif)
+![选择最佳的移动](./docs/images/4.%20choose%20highest%20evaluation.gif)
 
 > 黑方借助于简单的评估函数进行游戏，你可以在 [https://codepen.io/yanranxiaoxi/pen/QWaYLpO](https://codepen.io/yanranxiaoxi/pen/QWaYLpO) 上尝试。
 
@@ -62,13 +62,13 @@
 
 之后，我们将子节点的最小值或最大值返回给父节点，这取决于要移动的是白方还是黑方。（也就是说，我们试图在每个层面上最小化或最大化结果。）
 
-![Minimax](./docs/images/5. Minimax.jpeg)
+![Minimax](./docs/images/5.%20Minimax.jpeg)
 
 > 这是一个特殊例子上的 Minimax 算法的可视化。对于白方来说，最好的选择是 `b2-c3`，因为我们可以保证我们可以得到一个评估优势为 `-50` 的结果。
 
 有了 Minimax，我们的 AI 开始理解国际象棋的一些基本策略：
 
-![使用 Minimax 算法](./docs/images/6. with Minimax.gif)
+![使用 Minimax 算法](./docs/images/6.%20with%20Minimax.gif)
 
 > 计算深度为 `2` 的 Minimax 算法，你可以在 [https://codepen.io/yanranxiaoxi/pen/bGazbKY](https://codepen.io/yanranxiaoxi/pen/bGazbKY) 上尝试。
 
@@ -84,13 +84,13 @@ Minimax 算法的有效性在很大程度上取决于我们能达到的计算深
 
 如果我们碰巧 **首先** 评估了那些良好的移动，α-β 剪枝会使 Minimax 算法更有效率。
 
-![α-β 剪枝](./docs/images/7. alpha-beta pruning.jpeg)
+![α-β 剪枝](./docs/images/7.%20alpha-beta%20pruning.jpeg)
 
 > 如果使用了 α-β 剪枝，则不需要评估这些位置，并且按照标号顺序访问树。
 
 使用 α-β 剪枝，我们可以显著提升 Minimax 算法的性能，如以下示例所示：
 
-![使用 α-β 剪枝优化的 Minimax 算法拥有更好的性能](./docs/images/8. Minimax with alpha-beta.png)
+![使用 α-β 剪枝优化的 Minimax 算法拥有更好的性能](./docs/images/8.%20Minimax%20with%20alpha-beta.png)
 
 > 以上为计算深度为 `4` 且初始位置如图的搜索，需要评估的位置数量。
 
@@ -102,13 +102,13 @@ Minimax 算法的有效性在很大程度上取决于我们能达到的计算深
 
 我们将使用一个稍微调整过的最初在国际象棋维基中描述的棋子-方格表。
 
-![棋子-方格表](./docs/images/9. piece-square tables.png)
+![棋子-方格表](./docs/images/9.%20piece-square%20tables.png)
 
 > 可视化的棋子-方格表。我们可以根据棋子的位置，增加或减少评估优势。
 
 通过以下改进，我们开始得到一种算法，至少从一个普通玩家的角度来看，它可以下一些“像样的”国际象棋：
 
-![“像样的”国际象棋](./docs/images/10. decent.gif)
+![“像样的”国际象棋](./docs/images/10.%20decent.gif)
 
 > 改进的评估功能与 α-β 剪枝优化，计算深度为 `3`，你可以在 [https://codepen.io/yanranxiaoxi/pen/YzYBzpQ](https://codepen.io/yanranxiaoxi/pen/YzYBzpQ) 上尝试。
 
