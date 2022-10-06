@@ -331,7 +331,7 @@ function checkStatus(color) {
   } else if (game.in_draw()) {
     $('#status').html(`<b>和棋！</b> (五十回合规则)`);
   } else if (game.in_check()) {
-    $('#status').html(`<b>${colorName}</b>已<b>将军！</b>`);
+    $('#status').html(`<b>${colorName}</b>已被<b>将军！</b>`);
     return false;
   } else {
     $('#status').html(`当前无「将军」、「将死」、「和棋」状态`);
