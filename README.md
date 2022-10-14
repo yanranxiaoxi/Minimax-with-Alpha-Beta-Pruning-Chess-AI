@@ -1,3 +1,5 @@
+![Minimax-with-Alpha-Beta-Pruning-Chess-AI](https://socialify.api.soraharu.com/yanranxiaoxi/Minimax-with-Alpha-Beta-Pruning-Chess-AI/image?description=1&font=KoHo&forks=1&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2Fyanranxiaoxi%2FMinimax-with-Alpha-Beta-Pruning-Chess-AI%2Fmain%2Fimages%2Ficon.png&name=1&pattern=Floating%20Cogs&stargazers=1&theme=Light)
+
 # Minimax with Alpha-Beta Pruning Chess AI
 
 ⭐ α-β 剪枝优化 Minimax 算法国际象棋 AI ⭐
